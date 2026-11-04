@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLtypePro - Download App</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 10% 10%, #d8eaff, transparent 40%),
+      radial-gradient(circle at 90% 90%, #c8dcff, transparent 40%),
+      linear-gradient(135deg,#f8fbff,#eaf2ff);
+    color: #10264b;
+    overflow-x: hidden;
+}
+
+.glass {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 15px 45px rgba(35,85,160,0.12);
+    border-radius: 28px;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 25px 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 490px;
+    text-align: center;
+}
+
+.logo {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+    border-radius: 23px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 8px 25px #2466c52b;
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: 34px;
+    font-weight: 900;
+    color: #0754c9;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #65748e;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.poster {
+    width: 100%;
+    margin: 25px 0;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px #234b8024;
+}
+
+.poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.app-card {
+    padding: 23px;
+    margin: 20px 0;
+}
+
+.app-icon {
+    width: 75px;
+    height: 75px;
+    border-radius: 22px;
+    background: linear-gradient(135deg,#0875ff,#0645b8);
+    color: white;
+    font-size: 35px;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+    margin: auto auto 13px;
+    box-shadow: 0 8px 20px #075bdc50;
+}
+
+.app-card h2 {
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    color: #63748f;
+    font-size: 12px;
+}
+
+.download-btn {
+    border: none;
+    width: 100%;
+    padding: 19px;
+    border-radius: 18px;
+    background: linear-gradient(120deg,#0866ed,#0344bc);
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 25px #0756cb45;
+    transition: .25s;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px #0756cb55;
+}
+
+.download-btn:active {
+    transform: scale(.97);
+}
+
+.footer {
+    font-size: 12px;
+    color: #8997aa;
+    margin-top: 25px;
+}
+
+/* SECOND PAGE */
+
+#secondPage {
+    display: none;
+}
+
+.error-card {
+    padding: 35px 24px;
+    animation: appear .6s ease;
+}
+
+.error-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #fff0f0;
+    color: #e34d59;
+    font-size: 48px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 22px;
+    box-shadow: 0 8px 25px #e34d5920;
+}
+
+.error-card h2 {
+    font-size: 27px;
+    color: #d93649;
+    margin-bottom: 14px;
+}
+
+.error-message {
+    font-size: 15px;
+    color: #596b85;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.error-info {
+    padding: 16px;
+    background: rgba(255,255,255,.65);
+    border-radius: 16px;
+    font-size: 13px;
+    color: #63748f;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.back-btn {
+    background: #eaf2ff;
+    color: #0754c9;
+    border: 1px solid #cbdfff;
+    padding: 15px;
+    border-radius: 14px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* LOADING OVERLAY */
+
+#loading {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(225,238,255,.72);
+    backdrop-filter: blur(22px);
+}
+
+.loading-card {
+    width: 100%;
+    max-width: 330px;
+    text-align: center;
+    padding: 35px 25px;
+}
+
+.spinner {
+    width: 65px;
+    height: 65px;
+    border: 5px solid #d7e6ff;
+    border-top-color: #0759d5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 25px;
+}
+
+.loading-card h2 {
+    color: #0754c9;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.loading-card p {
+    color: #75849b;
+    font-size: 14px;
+}
+
+.progress {
+    width: 100%;
+    height: 6px;
+    background: #dce8fa;
+    border-radius: 20px;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: #0866ed;
+    border-radius: 20px;
+    animation: progress 2.8s linear forwards;
+}
+
+/* NOTIFICATION */
+
+.toast {
+    position: fixed;
+    z-index: 120;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%,-150%);
+    width: calc(100% - 35px);
+    max-width: 380px;
+    padding: 17px;
+    border-radius: 17px;
+    background: rgba(255,255,255,.9);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 12px 35px #183e7030;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    transition: .5s;
+}
+
+.toast.show {
+    transform: translate(-50%,0);
+}
+
+.toast-icon {
+    background: #fff0f0;
+    color: #e34d59;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.toast strong {
+    font-size: 14px;
+    color: #243b5b;
+}
+
+.toast small {
+    display: block;
+    margin-top: 4px;
+    color: #8290a4;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes progress {
+    to { width: 100%; }
+}
+
+@keyframes appear {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+}
+
+@media(max-width:400px) {
+    h1 {font-size:29px;}
+    .error-card {padding:28px 18px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIRST PAGE -->
+
+<section class="page" id="firstPage">
+<div class="container">
+
+<img class="logo" src="SLtypePro.png" alt="SLtypePro Logo">
+
+<h1>SLtypePro</h1>
+
+<p class="subtitle">
+Sinhala & English Typing Made Easy<br>
+Your Ultimate Typesetting Experience
+</p>
+
+<div class="poster">
+<img src="sl type pro post.jpeg" alt="SLtypePro App Poster">
+</div>
+
+<div class="glass app-card">
+
+<div class="app-icon">
+<img class="logo" src="SLtypePro.png" alt="SLtypePro Logo">
+
+</div>
+
+<h2>SLtypePro App</h2>
+
+<p class="subtitle">
+Professional Sinhala Typesetting Application
+</p>
+
+<div class="details">
+<span>📱 Android App</span>
+<span>⌨️ Sinhala Typing</span>
+<span>⚡ Easy to Use</span>
+</div>
+
+</div>
+
+<button class="download-btn" onclick="startDownload()">
+⬇ &nbsp; DOWNLOAD NOW
+</button>
+
+<p class="footer">
+© 2026 SLtypePro. All Rights Reserved.
+</p>
+
+</div>
+</section>
+
+
+<!-- SECOND PAGE -->
+
+<section class="page" id="secondPage">
+
+<div class="container">
+
+<div class="glass error-card">
+
+<div class="error-icon">!</div>
+
+<h2>Download Failed</h2>
+
+<p class="error-message">
+We're sorry! The SLtypePro application
+could not be downloaded at this time.
+</p>
+
+<div class="error-info">
+<strong>Status: Unavailable</strong><br><br>
+
+This download is currently unavailable
+in this demonstration.
+
+No problem has been detected on your device.
+Please try again later.
+</div>
+
+<button class="back-btn" onclick="goBack()">
+← Back to Home
+</button>
+
+</div>
+
+<p class="footer">
+SLtypePro Download Center
+</p>
+
+</div>
+</section>
+
+
+<!-- LOADING -->
+
+<div id="loading">
+
+<div class="glass loading-card">
+
+<div class="spinner"></div>
+
+<h2>Please Wait...</h2>
+
+<p>Preparing SLtypePro download</p>
+
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+
+</div>
+</div>
+
+
+<!-- NOTIFICATION -->
+
+<div class="toast" id="toast">
+
+<div class="toast-icon">!</div>
+
+<div>
+<strong>Download Failed</strong>
+<small>SLtypePro download is unavailable.</small>
+</div>
+
+</div>
+
+
+<script>
+
+function startDownload() {
+
+    const loading = document.getElementById("loading");
+
+    loading.style.display = "flex";
+
+    setTimeout(function() {
+
+        loading.style.display = "none";
+
+        document.getElementById("firstPage").style.display = "none";
+
+        document.getElementById("secondPage").style.display = "flex";
+
+        window.scrollTo(0,0);
+
+        showNotification();
+
+    }, 3000);
+}
+
+
+function showNotification() {
+
+    const toast = document.getElementById("toast");
+
+    toast.classList.add("show");
+
+    setTimeout(function() {
+        toast.classList.remove("show");
+    }, 4000);
+
+}
+
+
+function goBack() {
+
+    document.getElementById("secondPage").style.display = "none";
+
+    document.getElementById("firstPage").style.display = "flex";
+
+    window.scrollTo(0,0);
+
+}
+
+</script>
+
+</body>
+</html>
